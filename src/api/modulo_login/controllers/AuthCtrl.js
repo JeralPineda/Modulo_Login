@@ -33,7 +33,31 @@ const login = async (req, res) => {
       // Generar el token
       const token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
 
-      res.status(200).json({ message: 'Inicio de sesión correcto', token: token });
+      let id_usuario = usuario.id_usuario;
+      let id_persona = usuario.id_persona;
+      let nombre = usuario.nombre;
+      let email = usuario.correo_usuario;
+      let rol = usuario.id_rol_usuario;
+      let activo = usuario.indicador_usuario;
+      let sesion = usuario.primera_sesion;
+      let fecha_registro = usuario.fecha_registro;
+
+      const user = {
+         id_usuario,
+         id_persona,
+         nombre,
+         email,
+         rol,
+         activo,
+         sesion,
+         fecha_registro,
+      };
+
+      res.status(200).json({
+         message: 'Inicio de sesión correcto',
+         user,
+         token: token,
+      });
    } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Hable con el administrador' });
