@@ -211,6 +211,7 @@ select:focus {
    font-weight: 300;
    margin: 2rem;
    transition: 1s ease-in-out;
+   width: auto;
 }
 
 .text p {
@@ -285,7 +286,7 @@ b#sign-in {
    }
 }
 
-@media only screen and (max-width: 567px) {
+@media only screen and (max-width: 600px) {
    .container::before,
    .container.sign-in::before {
       height: 100vh;
