@@ -28,6 +28,20 @@ const getUsuario = (id) => {
    });
 };
 
+// Editar usuario por id
+const putUsuario = (tokenPreguntas, sesion, fecha, id) => {
+   return new Promise((resolve, reject) => {
+      mysqlConnection.query('UPDATE  usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro ? WHERE usuario.id_usuario = ?', [tokenPreguntas, sesion, fecha, id], (err, user) => {
+         if (err) {
+            reject(err);
+            console.log(err);
+         } else {
+            resolve(user[0]);
+         }
+      });
+   });
+};
+
 // Insertar token_password a usuarios por email
 const postToken = (token, id) => {
    return new Promise((resolve, reject) => {
@@ -129,6 +143,7 @@ const getRespuestas = (id) => {
 module.exports = {
    getEmail,
    getUsuario,
+   putUsuario,
    postToken,
    postPassword,
    limpiarToken,
