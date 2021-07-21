@@ -5,7 +5,7 @@ const router = express.Router();
 // Controladores modulo login
 const { login, recuperarPassword, newPassword, passwordPreguntas } = require('../controllers/AuthCtrl');
 const { user } = require('../controllers/userCtrl');
-const { preguntas, getAllPreguntas } = require('../controllers/preguntasCtrl');
+const { preguntas, getAllPreguntas, loginPreguntas } = require('../controllers/preguntasCtrl');
 
 // Middlewares modulo login
 const { validarJWT } = require('../middlewares/validar-jwt');
@@ -29,6 +29,9 @@ router.get('/usuarios/:id', [validarJWT, esAdminRole, tieneRol(1, 3)], user);
 
 // ruta insertar preguntas
 router.post('/preguntas', [check('respuesta1', 'La respuesta es obligatoria').not().isEmpty(), check('respuesta2', 'La respuesta es obligatoria').not().isEmpty(), validarCampos], preguntas);
+
+// Ruta para crear autenticacion si el usuario hace su primer login
+router.post('/preguntas_login', loginPreguntas);
 
 // Ruta para traer las preguntas
 router.get('/preguntas', getAllPreguntas);
