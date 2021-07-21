@@ -1,7 +1,8 @@
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { generarJWT } = require('../helpers/generar-jwt');
 
-const { getUsuario, postRespuestas, tokenPreguntas, getPreguntas } = require('../model/users');
+const { getUsuario, postRespuestas, tokenPreguntas, getPreguntas, putUsuario, getEmail } = require('../model/users');
 
 const preguntas = async (req, res) => {
    // Validación para revisar que venga el token
@@ -37,15 +38,16 @@ const preguntas = async (req, res) => {
       // Verificamos si existe el token en la BD
       if (!usuario.token_preguntas) {
          return res.status(401).json({
-            message: 'No tienes autorización para estar aqui!!',
+            message: 'No tienes autorización para estar aquí!!',
          });
       }
       // verificar que el token de la ruta sea igual al de la base de datos
       if (token !== usuario.token_preguntas) {
          return res.status(401).json({
-            message: 'No tienes autorización para estar aqui!!',
+            message: 'No tienes autorización para estar aquí!!',
          });
       }
+
       // Verificar si el uid tiene estado act
       if (estado !== 'activo') {
          return res.status(401).json({
@@ -77,6 +79,45 @@ const preguntas = async (req, res) => {
    //    Fin try-catch
 };
 
+const loginPreguntas = async (req, res) => {
+   const correo = req.body.correo;
+
+   try {
+      // Modelo de datos de usuario
+      const usuario = await getEmail(correo);
+      console.log(usuario);
+
+      // Verificar si el correo existe
+      if (usuario === undefined) {
+         return res.status(400).json({ message: 'El usuario o la contraseña son incorrectos' });
+      }
+
+      // Si el usuario esta activo
+      if (usuario.indicador_usuario !== 'activo') {
+         return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
+      }
+
+      // Generar el token
+      let token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
+
+      const id = usuario.id_usuario;
+      const tokenPreguntas = token;
+      const sesion = 1;
+      const fecha = new Date();
+
+      //   Actualizamos información del usuario
+      //   await putUsuario(tokenPreguntas, sesion, fecha, id);
+
+      res.status(200).json({
+         token: token,
+      });
+   } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Hable con el administrador' });
+   }
+   //    Fin try-catch
+};
+
 const getAllPreguntas = async (req, res) => {
    try {
       // Modelo de datos para obtener el preguntas
@@ -95,5 +136,6 @@ const getAllPreguntas = async (req, res) => {
 
 module.exports = {
    preguntas,
+   loginPreguntas,
    getAllPreguntas,
 };
