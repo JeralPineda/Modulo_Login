@@ -1,15 +1,6 @@
 (() => {
-   // Obtenemos la url actual
-   var URLactual = jQuery(location).attr('href');
-
-   // Extraemos el token de la url
-   const param = URLactual.substring(38);
-
-   // Guardamos el token en el localstorage
-   localStorage.setItem('token-respuesta', param);
-
    // Extraemos el token del local estorage para comprobar que existe
-   const token = localStorage.getItem('token-respuesta');
+   const token = localStorage.getItem('token_respuestas');
 
    //    validamos que el token exista
    if (token) {
@@ -34,18 +25,18 @@
                Swal.fire({
                   icon: 'success',
                   text: res.message,
+                  showConfirmButton: false,
+                  timer: 2500,
                }).then((result) => {
-                  if (result.isConfirmed) {
-                     // limpiamos el formulario
-                     $('#formRespuestas')[0].reset();
+                  // limpiamos el formulario
+                  $('#formRespuestas')[0].reset();
 
-                     // Redireccionar
-                     const url = '/auth/login';
-                     $(location).attr('href', url);
+                  // Redireccionar
+                  const url = '/auth/login';
+                  $(location).attr('href', url);
 
-                     //   Limpiamos el token-meiler del localStorage
-                     localStorage.removeItem('token-respuesta');
-                  }
+                  //   Limpiamos el token-meiler del localStorage
+                  localStorage.removeItem('token_respuestas');
                });
             } catch (error) {
                // Accedemos al message de la data del error y lo guardamos
