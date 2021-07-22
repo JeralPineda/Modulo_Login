@@ -149,38 +149,26 @@ const passwordPreguntas = async (req, res) => {
       }
 
       //   obtener las respuestas de la BD
-      const respuestas = await getRespuestas(usuario.id_usuario);
+      const respuestas = await getRespuestas(usuario.id_usuario, pregunta);
+
+      console.log(respuestas);
 
       if (!respuestas) {
-         return res.status(400).json({ message: 'El usuario es incorrecto' });
+         return res.status(400).json({ message: 'Su información es incorrecta' });
       }
 
-      let j = respuestas.length;
+      // Verificar la respuesta
+      const respuesta = bcryptjs.compareSync(resp, respuestas.respuesta);
 
-      for (let i = 0; i < j; i++) {
-         //   const element = array[i];
-
-         // Verificar la contraseña
-         const respuesta = bcryptjs.compareSync(resp, respuestas[i].respuesta);
-
-         //   Validar que existan respuestas en la BD
-         if (pregunta !== respuestas.id_preguntas) {
-            return res.status(400).json({ message: 'Su información es incorrecta' });
-         }
-
-         if (respuesta !== respuestas.respuesta) {
-            return res.status(400).json({ message: 'Su información es incorrecta' });
-         }
+      //   Validar que existan respuestas en la BD
+      if (!respuesta) {
+         return res.status(400).json({ message: 'Su información es incorrecta' });
       }
 
       // // Generar el token
       const token = await generarJwtPassword(usuario.id_usuario, usuario.nombre_usuario, usuario.indicador_usuario);
 
-      // Generar la url para actualizar la contraseña
-      verificarLink = `http://${req.headers.host}/auth/new_password`;
-      // console.log(verificarLink);
-
-      // Guardar el token en la Base de Datos
+      //   // Guardar el token en la Base de Datos
       await postToken(token, usuario.id_usuario);
 
       res.status(200).json({ message: 'Ya puedes cambiar tu contraseña', token });
