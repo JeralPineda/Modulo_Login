@@ -7,11 +7,13 @@
          e.preventDefault();
 
          const correo = $('#correo').val();
+         const pregunta = $('#pregunta').val();
          const respuesta = $('#respuesta').val();
 
          if (correo.length >= 4 && respuesta.length >= 2) {
             datos = {
                correo,
+               pregunta,
                respuesta,
             };
 
