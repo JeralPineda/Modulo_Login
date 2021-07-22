@@ -130,7 +130,7 @@ const getAllPreguntas = async (req, res) => {
    try {
       // Modelo de datos para obtener el preguntas
       const preguntas = await getPreguntas();
-      // console.log(preguntas);
+
       if (!preguntas) {
          return res.status(400).json({ message: 'No hay resultados' });
       }
