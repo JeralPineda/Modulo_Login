@@ -1,5 +1,5 @@
 (() => {
-   let userData = [];
+   let userData;
    const pregunta = $('#formPreguntas #pregunta');
 
    const getPreguntas = async () => {
@@ -8,10 +8,13 @@
 
          // guradamos los datos
          userData = res.data;
+         console.log(userData.length);
 
-         //  Creamos html
-         pregunta.append(` <option value="${userData.id_preguntas}">${userData.pregunta_1}</option>`);
-         pregunta.append(` <option value="${userData.id_preguntas}">${userData.pregunta_2}</option>`);
+         let rep = userData.length;
+
+         for (let i = 0; i < rep; i++) {
+            pregunta.append(` <option value="${userData[i].id_preguntas}">${userData[i].pregunta}</option>`);
+         }
       } catch (error) {
          // Accedemos al message de la data del error y lo guardamos
          const message = error.response.data.message;
