@@ -10,7 +10,9 @@ const preguntas = async (req, res) => {
       return res.status(400).json({ message: 'No tiene Autorización' });
    }
 
+   const pregunta1 = req.body.pregunta1;
    const respuesta1 = req.body.respuesta1;
+   const pregunta2 = req.body.pregunta2;
    const respuesta2 = req.body.respuesta2;
 
    // Encriptar la respuestas secretas
@@ -55,15 +57,14 @@ const preguntas = async (req, res) => {
          });
       }
 
+      const nombre = usuario.nombre_usuario;
+      const fechas = new Date();
+
       // Guardar las respuestas del usuario
-      const respuestas = {
-         id_usuario: uid,
-         id_preguntas: 4,
-         Respuesta_1: newRespuesta1,
-         Respuesta_2: newRespuesta2,
-         usr_registro: usuario.nombre_usuario,
-         fecha_registro: new Date(),
-      };
+      const respuestas = [
+         [uid, pregunta1, newRespuesta1, nombre, fechas],
+         [uid, pregunta2, newRespuesta2, nombre, fechas],
+      ];
 
       await postRespuestas(respuestas);
 
