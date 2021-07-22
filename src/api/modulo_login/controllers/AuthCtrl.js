@@ -131,6 +131,7 @@ const recuperarPassword = async (req, res) => {
 
 const passwordPreguntas = async (req, res) => {
    const correo = req.body.correo;
+   const pregunta = req.body.pregunta;
    const resp = req.body.respuesta;
 
    try {
@@ -154,12 +155,22 @@ const passwordPreguntas = async (req, res) => {
          return res.status(400).json({ message: 'El usuario es incorrecto' });
       }
 
-      // Verificar la contraseña
-      const respuesta = bcryptjs.compareSync(resp, respuestas.respuesta_1) || bcryptjs.compareSync(resp, respuestas.respuesta_2);
+      let j = respuestas.length;
 
-      //   Validar que existan respuestas en la BD
-      if (!respuesta) {
-         return res.status(400).json({ message: 'Su información es incorrecta' });
+      for (let i = 0; i < j; i++) {
+         //   const element = array[i];
+
+         // Verificar la contraseña
+         const respuesta = bcryptjs.compareSync(resp, respuestas[i].respuesta);
+
+         //   Validar que existan respuestas en la BD
+         if (pregunta !== respuestas.id_preguntas) {
+            return res.status(400).json({ message: 'Su información es incorrecta' });
+         }
+
+         if (respuesta !== respuestas.respuesta) {
+            return res.status(400).json({ message: 'Su información es incorrecta' });
+         }
       }
 
       // // Generar el token
