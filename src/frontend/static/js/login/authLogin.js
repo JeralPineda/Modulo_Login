@@ -29,10 +29,10 @@
                   localStorage.setItem('token_respuestas', resp.token);
 
                   Swal.fire({
-                     icon: 'success',
+                     icon: 'error',
                      text: resp.message,
                      showConfirmButton: false,
-                     timer: 2500,
+                     timer: 2000,
                   }).then(() => {
                      // limpiamos el formulario
                      $('#formLogin')[0].reset();
