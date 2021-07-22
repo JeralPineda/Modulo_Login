@@ -32,7 +32,7 @@ const preguntas = async (req, res) => {
 
    try {
       // Verificar el token del url y extraer el uid
-      const { uid, estado } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+      const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
       if (!uid) {
          return res.status(400).json({ message: 'El usuario no existe' });
@@ -46,13 +46,13 @@ const preguntas = async (req, res) => {
       }
 
       // Verificamos si existe el token en la BD
-      if (!usuario.token_preguntas) {
+      if (!usuario.token_respuestas) {
          return res.status(401).json({
             message: 'No tienes autorización para estar aquí!!',
          });
       }
       // verificar que el token de la ruta sea igual al de la base de datos
-      if (token !== usuario.token_preguntas) {
+      if (token !== usuario.token_respuestas) {
          return res.status(401).json({
             message: 'No tienes autorización para estar aquí!!',
          });
