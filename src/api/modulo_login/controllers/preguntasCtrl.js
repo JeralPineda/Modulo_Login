@@ -113,6 +113,7 @@ const loginPreguntas = async (req, res) => {
       await putUsuario(tokenPreguntas, sesion, fecha, id);
 
       res.status(200).json({
+         message: 'Necesita responder las preguntas secretas',
          token: token,
       });
    } catch (error) {
