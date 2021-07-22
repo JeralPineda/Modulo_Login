@@ -87,12 +87,12 @@ const limpiarToken = (id, token_password) => {
 // Insertar respuestas por usuario
 const postRespuestas = (respuestas) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('INSERT INTO respuestas_usuario SET ?', [respuestas], (err, resp) => {
+      mysqlConnection.query('INSERT INTO respuestas_usuario(id_usuario, id_preguntas, respuesta, usr_registro, fecha_registro) VALUES ?', [respuestas], (err, resp) => {
          if (err) {
             reject(err);
             console.log(err);
          } else {
-            resolve(resp[0]);
+            resolve(resp);
          }
       });
    });
@@ -134,7 +134,7 @@ const getRespuestas = (id) => {
             reject(err);
             console.log(err);
          } else {
-            resolve(result[0]);
+            resolve(result);
          }
       });
    });
