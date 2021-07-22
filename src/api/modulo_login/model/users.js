@@ -31,7 +31,7 @@ const getUsuario = (id) => {
 // Editar usuario por id
 const putUsuario = (tokenPreguntas, sesion, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE  usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro ? WHERE usuario.id_usuario = ?', [tokenPreguntas, sesion, fecha, id], (err, user) => {
+      mysqlConnection.query('UPDATE  usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [tokenPreguntas, sesion, fecha, id], (err, user) => {
          if (err) {
             reject(err);
             console.log(err);
