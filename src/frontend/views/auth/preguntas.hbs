@@ -17,7 +17,7 @@
                         <i class="fas fa-envelope"></i>
                         <div class="formulario__grupo-input">
                             <input type="email" class="formulario__input" placeholder="Correo" name="correo" id="correo"
-                                onkeyup="myFunction()" required />
+                                onkeyup="myFunction()" required   maxlength="30"/>
 
                         </div>
                         <p class="formulario__input-error">No es un correo valido</p>
@@ -32,9 +32,9 @@
                         <i class="fas fa-question"></i>
                         <div class="formulario__grupo-input">
                             <input type="text" class="formulario__input" name="respuesta" id="respuesta"
-                                placeholder="Respuesta" onkeyup="myFunction()" />
+                                placeholder="Respuesta" onkeyup="myFunction()"  minlength="4" maxlength="20"/>
                         </div>
-                        <p class="formulario__input-error">La respuesta es obligatoria</p>
+                        <p class="formulario__input-error">La respuesta debe contener de 4 a 20 dígitos.</p>
                     </div>
 
                     <div class="formulario__grupo formulario__grupo-btn-enviar">

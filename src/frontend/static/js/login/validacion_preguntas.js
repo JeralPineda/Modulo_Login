@@ -2,7 +2,7 @@ const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formPreguntas input');
 
 const expresiones = {
-   respuesta: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{1,50}$/, // Letras, numeros, guion y guion_bajo
+   respuesta: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{4,20}$/, // Letras, numeros, guion y guion_bajo
    correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 };
 
