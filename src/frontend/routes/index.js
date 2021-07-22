@@ -11,7 +11,7 @@ router.get('/auth/recuperacion', authCtrl.recuperacion);
 router.get('/auth/new_password', authCtrl.newPassword);
 router.get('/auth/correo', authCtrl.correo);
 router.get('/auth/preguntas', authCtrl.preguntas);
-router.get('/auth/respuestas/:token', authCtrl.respuestas);
+router.get('/auth/respuestas', authCtrl.respuestas);
 router.get('/home', authCtrl.home);
 
 // router.get('*', (req, res) => res.redirect('/'));
