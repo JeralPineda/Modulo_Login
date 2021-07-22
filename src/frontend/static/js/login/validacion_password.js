@@ -2,7 +2,7 @@ const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formPassword input');
 
 const expresiones = {
-   password: /^.{4,12}$/, // 4 a 12 digitos.
+   password: /^.{6,12}$/, // 4 a 12 digitos.
 };
 
 const campos = {
