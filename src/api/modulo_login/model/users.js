@@ -99,9 +99,9 @@ const postRespuestas = (respuestas) => {
 };
 
 // Limpiamos el token de las preguntas
-const tokenPreguntas = (token_preguntas, sesion, fecha, id) => {
+const tokenPreguntas = (token_preguntas, indicador, sesion, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [token_preguntas, sesion, fecha, id], (err, rows) => {
+      mysqlConnection.query('UPDATE usuario SET token_preguntas = ?, indicador_usuario = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [token_preguntas, indicador, sesion, fecha, id], (err, rows) => {
          if (err) {
             reject(err);
             console.log(err);
