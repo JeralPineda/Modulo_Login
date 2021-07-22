@@ -73,6 +73,7 @@ const preguntas = async (req, res) => {
       const sesion = 1;
       const fecha = new Date();
 
+      //   Actualizamos información del usuario
       await tokenPreguntas(tokenPregunta, sesion, fecha, uid);
 
       res.status(201).json({ message: 'Preguntas guardadas exitosamente' });
