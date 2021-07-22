@@ -231,8 +231,6 @@ const passwordPreguntas = async (req, res) => {
       //   obtener las respuestas de la BD
       const respuestas = await getRespuestas(usuario.id_usuario, pregunta);
 
-      console.log(respuestas);
-
       if (!respuestas) {
          return res.status(400).json({ message: 'Su información es incorrecta' });
       }
