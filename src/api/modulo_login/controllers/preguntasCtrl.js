@@ -69,7 +69,10 @@ const preguntas = async (req, res) => {
 
       // // Limpiamos el token_preguntas de la BD
       const tokenPregunta = null;
-      await tokenPreguntas(tokenPregunta, uid);
+      const sesion = 1;
+      const fecha = new Date();
+
+      await tokenPreguntas(tokenPregunta, sesion, fecha, uid);
 
       res.status(201).json({ message: 'Preguntas guardadas exitosamente' });
    } catch (error) {
@@ -106,14 +109,13 @@ const loginPreguntas = async (req, res) => {
       //   datos para hacer el update en usuario
       const id = usuario.id_usuario;
       const tokenPreguntas = token;
-      const sesion = 1;
       const fecha = new Date();
 
       //   Actualizamos información del usuario
-      await putUsuario(tokenPreguntas, sesion, fecha, id);
+      await putUsuario(tokenPreguntas, fecha, id);
 
       res.status(200).json({
-         message: 'Necesita responder las preguntas secretas',
+         message: 'Responder las preguntas secretas para iniciar sesión',
          token: token,
       });
    } catch (error) {
