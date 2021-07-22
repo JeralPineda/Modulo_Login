@@ -51,11 +51,11 @@ const preguntas = async (req, res) => {
       }
 
       // Verificar si el uid tiene estado act
-      if (estado !== 'activo') {
-         return res.status(401).json({
-            message: 'El usuario no existe',
-         });
-      }
+      //   if (estado !== 'activo') {
+      //      return res.status(401).json({
+      //         message: 'El usuario no existe',
+      //      });
+      //   }
 
       const nombre = usuario.nombre_usuario;
       const fechas = new Date();
@@ -72,9 +72,10 @@ const preguntas = async (req, res) => {
       const tokenPregunta = null;
       const sesion = 1;
       const fecha = new Date();
+      const indicador = 'activo';
 
       //   Actualizamos información del usuario
-      await tokenPreguntas(tokenPregunta, sesion, fecha, uid);
+      await tokenPreguntas(tokenPregunta, indicador, sesion, fecha, uid);
 
       res.status(201).json({ message: 'Preguntas guardadas exitosamente' });
    } catch (error) {
@@ -97,9 +98,9 @@ const loginPreguntas = async (req, res) => {
       }
 
       // Si el usuario esta activo
-      if (usuario.indicador_usuario !== 'activo') {
-         return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
-      }
+      //   if (usuario.indicador_usuario !== 'activo') {
+      //      return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
+      //   }
 
       if (usuario.primera_sesion !== 0) {
          return res.status(400).json({ message: `No permitido, no es su primera sesión` });

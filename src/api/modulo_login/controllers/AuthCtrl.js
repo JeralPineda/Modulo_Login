@@ -6,7 +6,7 @@ const { generarJWT, generarJwtPassword } = require('../helpers/generar-jwt');
 
 const transporter = require('../config/meiler');
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
    const correo = req.body.correo;
    const password = req.body.password;
 
@@ -20,44 +20,118 @@ const login = async (req, res) => {
       }
 
       // Si el usuario esta activo
-      if (usuario.indicador_usuario !== 'activo') {
-         return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
+      if (usuario.primera_sesion === 0) {
+         // Verificar la contraseña
+         const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
+         if (!validarPassword) {
+            return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
+         }
+
+         //  Generar el token
+         const token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
+
+         let id_usuario = usuario.id_usuario;
+         let id_persona = usuario.id_persona;
+         let nombre = usuario.nombre;
+         let email = usuario.correo_usuario;
+         let rol = usuario.id_rol_usuario;
+         let activo = usuario.indicador_usuario;
+         let sesion = usuario.primera_sesion;
+         let fecha_registro = usuario.fecha_registro;
+
+         const user = {
+            id_usuario,
+            id_persona,
+            nombre,
+            email,
+            rol,
+            activo,
+            sesion,
+            fecha_registro,
+         };
+
+         return res.status(200).json({
+            message: 'Inicio de sesión correcto',
+            user,
+            token: token,
+         });
+
+         // Si el usuario esta activo
+      } else {
+         if (usuario.indicador_usuario !== 'activo') {
+            return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
+         }
+
+         // Verificar la contraseña
+         const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
+         if (!validarPassword) {
+            return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
+         }
+
+         //  Generar el token
+         const token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
+
+         let id_usuario = usuario.id_usuario;
+         let id_persona = usuario.id_persona;
+         let nombre = usuario.nombre;
+         let email = usuario.correo_usuario;
+         let rol = usuario.id_rol_usuario;
+         let activo = usuario.indicador_usuario;
+         let sesion = usuario.primera_sesion;
+         let fecha_registro = usuario.fecha_registro;
+
+         const user = {
+            id_usuario,
+            id_persona,
+            nombre,
+            email,
+            rol,
+            activo,
+            sesion,
+            fecha_registro,
+         };
+
+         return res.status(200).json({
+            message: 'Inicio de sesión correcto',
+            user,
+            token: token,
+         });
       }
 
-      // Verificar la contraseña
-      const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
-      if (!validarPassword) {
-         return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
-      }
+      //   // Verificar la contraseña
+      //   const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
+      //   if (!validarPassword) {
+      //      return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
+      //   }
 
       // Generar el token
-      const token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
+      //   const token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
 
-      let id_usuario = usuario.id_usuario;
-      let id_persona = usuario.id_persona;
-      let nombre = usuario.nombre;
-      let email = usuario.correo_usuario;
-      let rol = usuario.id_rol_usuario;
-      let activo = usuario.indicador_usuario;
-      let sesion = usuario.primera_sesion;
-      let fecha_registro = usuario.fecha_registro;
+      //   let id_usuario = usuario.id_usuario;
+      //   let id_persona = usuario.id_persona;
+      //   let nombre = usuario.nombre;
+      //   let email = usuario.correo_usuario;
+      //   let rol = usuario.id_rol_usuario;
+      //   let activo = usuario.indicador_usuario;
+      //   let sesion = usuario.primera_sesion;
+      //   let fecha_registro = usuario.fecha_registro;
 
-      const user = {
-         id_usuario,
-         id_persona,
-         nombre,
-         email,
-         rol,
-         activo,
-         sesion,
-         fecha_registro,
-      };
+      //   const user = {
+      //      id_usuario,
+      //      id_persona,
+      //      nombre,
+      //      email,
+      //      rol,
+      //      activo,
+      //      sesion,
+      //      fecha_registro,
+      //   };
 
-      res.status(200).json({
-         message: 'Inicio de sesión correcto',
-         user,
-         token: token,
-      });
+      //   res.status(200).json({
+      //      message: 'Inicio de sesión correcto',
+      //      user,
+      //      token: token,
+      //   });
    } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Hable con el administrador' });
