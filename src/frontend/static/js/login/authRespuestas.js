@@ -23,8 +23,6 @@
                respuesta2,
             };
 
-            console.log(datos);
-
             try {
                const res = (await axios.post(`/api/v1/auth/preguntas`, datos, { headers })).data;
 
