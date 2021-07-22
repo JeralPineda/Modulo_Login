@@ -16,7 +16,7 @@ const login = async (req, res) => {
 
       // Verificar si el correo existe
       if (usuario === undefined) {
-         return res.status(400).json({ message: 'El usuario o la contraseña son invalidos' });
+         return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
       }
 
       // Si el usuario esta activo
@@ -27,7 +27,7 @@ const login = async (req, res) => {
       // Verificar la contraseña
       const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
       if (!validarPassword) {
-         return res.status(400).json({ message: 'El usuario o la contraseña son invalidos' });
+         return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
       }
 
       // Generar el token
@@ -206,7 +206,7 @@ const newPassword = async (req, res) => {
       // Verificamos si existe el token en la BD
       if (!usuario.token_password) {
          return res.status(401).json({
-            msg: 'No tienes autorización para estar aqui!!',
+            msg: 'No tienes autorización para estar aquí!!',
          });
       }
 
