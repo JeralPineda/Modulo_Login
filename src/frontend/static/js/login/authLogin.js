@@ -18,23 +18,48 @@
             try {
                const res = (await axios.post('/api/v1/auth/login', datos)).data;
 
-               // Extraemos el token y lo guardamos en localstorage
-               const { token } = res;
-               localStorage.setItem('token', token);
+               const { sesion, email } = res.user;
 
-               Swal.fire({
-                  icon: 'success',
-                  text: res.message,
-                  showConfirmButton: false,
-                  timer: 1500,
-               }).then(() => {
-                  // limpiamos el formulario
-                  $('#formLogin')[0].reset();
+               if (sesion === 0) {
+                  //    Si la session es 0 = true significa que es nuevo en el sistema
 
-                  // Redireccionar
-                  const url = '/home';
-                  $(location).attr('href', url);
-               });
+                  // hacemos la petición
+                  const resp = (await axios.post('/api/v1/auth/preguntas_login', { email })).data;
+
+                  localStorage.setItem('token_respuestas', resp.token);
+
+                  Swal.fire({
+                     icon: 'success',
+                     text: resp.message,
+                     showConfirmButton: false,
+                     timer: 2500,
+                  }).then(() => {
+                     // limpiamos el formulario
+                     $('#formLogin')[0].reset();
+
+                     // Redireccionar
+                     const url = '/auth/respuestas';
+                     $(location).attr('href', url);
+                  });
+               } else {
+                  // Extraemos el token y lo guardamos en localstorage
+                  const { token } = res;
+                  localStorage.setItem('token', token);
+
+                  Swal.fire({
+                     icon: 'success',
+                     text: res.message,
+                     showConfirmButton: false,
+                     timer: 1500,
+                  }).then(() => {
+                     // limpiamos el formulario
+                     $('#formLogin')[0].reset();
+
+                     // Redireccionar
+                     const url = '/home';
+                     $(location).attr('href', url);
+                  });
+               }
             } catch (error) {
                // Accedemos al message de la data del error y lo guardamos
                const message = error.response.data.message;
