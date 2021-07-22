@@ -69,8 +69,10 @@ const recuperarPassword = async (req, res) => {
    const correo = req.body.correo;
 
    const message = 'Revise su correo electrónico que contiene el enlace para restablecer su contraseña';
+
    let verificarLink;
    let usuario;
+
    try {
       // Modelo de datos de usuario
       usuario = await getEmail(correo);
@@ -218,7 +220,6 @@ const newPassword = async (req, res) => {
       // Encriptar la nueva contraseña
       const salt = bcryptjs.genSaltSync();
       const newPassword = bcryptjs.hashSync(password, salt);
-      // console.log(newPassword);
 
       // Guardar la nueva contraseña en la BD
       await postPassword(newPassword, usuario.id_usuario);
