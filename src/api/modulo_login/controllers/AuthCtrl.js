@@ -210,6 +210,10 @@ const passwordPreguntas = async (req, res) => {
    const pregunta = req.body.pregunta;
    const resp = req.body.respuesta;
 
+   if (!pregunta) {
+      return res.status(400).json({ message: 'La pregunta es obligatoria' });
+   }
+
    try {
       // Modelo de datos de usuario
       const usuario = await getEmail(correo);

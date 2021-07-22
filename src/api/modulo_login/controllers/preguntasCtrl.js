@@ -15,6 +15,14 @@ const preguntas = async (req, res) => {
    const pregunta2 = req.body.pregunta2;
    const respuesta2 = req.body.respuesta2;
 
+   if (!pregunta1) {
+      return res.status(400).json({ message: 'La pregunta es obligatoria' });
+   }
+
+   if (!pregunta2) {
+      return res.status(400).json({ message: 'La pregunta es obligatoria' });
+   }
+
    // Encriptar la respuestas secretas
    const salt = bcryptjs.genSaltSync();
    const newRespuesta1 = bcryptjs.hashSync(respuesta1, salt);
