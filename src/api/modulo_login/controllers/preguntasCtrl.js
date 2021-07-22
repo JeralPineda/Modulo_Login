@@ -22,7 +22,7 @@ const preguntas = async (req, res) => {
 
    try {
       // Verificar el token del url y extraer el uid
-      const { uid, estado } = jwt.verify(token, process.env.SECRETKEYRESETPASSWOR);
+      const { uid, estado } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
       if (!uid) {
          return res.status(400).json({ message: 'El usuario no existe' });
