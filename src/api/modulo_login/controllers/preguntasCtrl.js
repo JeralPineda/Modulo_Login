@@ -85,7 +85,6 @@ const loginPreguntas = async (req, res) => {
    try {
       // Modelo de datos de usuario
       const usuario = await getEmail(correo);
-      console.log(usuario);
 
       // Verificar si el correo existe
       if (usuario === undefined) {
@@ -97,16 +96,21 @@ const loginPreguntas = async (req, res) => {
          return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
       }
 
+      if (usuario.primera_sesion !== 0) {
+         return res.status(400).json({ message: `No permitido, no es su primera sesión` });
+      }
+
       // Generar el token
       let token = await generarJWT(usuario.id_usuario, usuario.id_rol_usuario, usuario.indicador_usuario, usuario.nombre_usuario);
 
+      //   datos para hacer el update en usuario
       const id = usuario.id_usuario;
       const tokenPreguntas = token;
       const sesion = 1;
       const fecha = new Date();
 
       //   Actualizamos información del usuario
-      //   await putUsuario(tokenPreguntas, sesion, fecha, id);
+      await putUsuario(tokenPreguntas, sesion, fecha, id);
 
       res.status(200).json({
          token: token,
