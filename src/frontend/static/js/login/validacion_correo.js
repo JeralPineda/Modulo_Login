@@ -2,7 +2,7 @@ const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formCorreo input');
 
 const expresiones = {
-   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-z]{3}$/,
 };
 
 const campos = {

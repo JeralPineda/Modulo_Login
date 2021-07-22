@@ -3,7 +3,7 @@ const inputs = document.querySelectorAll('#formLogin input');
 
 const expresiones = {
    password: /^.{6,12}$/, // 4 a 12 digitos.
-   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-z]{3}$/,
    usuario: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{6,30}$/, // Letras y espacios, pueden llevar acentos
 };
 
