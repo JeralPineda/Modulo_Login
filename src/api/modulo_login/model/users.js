@@ -29,9 +29,9 @@ const getUsuario = (id) => {
 };
 
 // Editar usuario por id
-const putUsuario = (tokenPreguntas, sesion, fecha, id) => {
+const putUsuario = (tokenPreguntas, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE  usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [tokenPreguntas, sesion, fecha, id], (err, user) => {
+      mysqlConnection.query('UPDATE  usuario SET token_preguntas = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [tokenPreguntas, fecha, id], (err, user) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -99,9 +99,9 @@ const postRespuestas = (respuestas) => {
 };
 
 // Limpiamos el token de las preguntas
-const tokenPreguntas = (id, token_preguntas) => {
+const tokenPreguntas = (token_preguntas, sesion, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE usuario SET token_preguntas = ? WHERE usuario.id_usuario = ?', [id, token_preguntas], (err, rows) => {
+      mysqlConnection.query('UPDATE usuario SET token_preguntas = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [token_preguntas, sesion, fecha, id], (err, rows) => {
          if (err) {
             reject(err);
             console.log(err);
