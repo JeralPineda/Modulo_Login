@@ -7,6 +7,8 @@
       $('#formRespuestas').on('submit', async (e) => {
          e.preventDefault();
 
+         const pregunta1 = $('#pregunta1').val();
+         const pregunta2 = $('#pregunta2').val();
          const respuesta1 = $('#respuesta').val();
          const respuesta2 = $('#respuesta2').val();
 
@@ -15,9 +17,13 @@
             const headers = { Authorization: `Bearer ${token}` };
 
             datos = {
+               pregunta1,
                respuesta1,
+               pregunta2,
                respuesta2,
             };
+
+            console.log(datos);
 
             try {
                const res = (await axios.post(`/api/v1/auth/preguntas`, datos, { headers })).data;
