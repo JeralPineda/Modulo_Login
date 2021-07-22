@@ -8,7 +8,6 @@
 
          // guradamos los datos
          userData = res.data;
-         console.log(userData.length);
 
          let rep = userData.length;
 
