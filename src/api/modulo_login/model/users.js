@@ -127,14 +127,14 @@ const getPreguntas = () => {
 };
 
 // Obtener respuestas por usuario
-const getRespuestas = (id) => {
+const getRespuestas = (id_usuario, id_preguntas) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('SELECT * FROM respuestas_usuario WHERE id_usuario = ?', [id], (err, result) => {
+      mysqlConnection.query('SELECT * FROM respuestas_usuario WHERE id_usuario = ? AND id_preguntas = ?', [id_usuario, id_preguntas], (err, result) => {
          if (err) {
             reject(err);
             console.log(err);
          } else {
-            resolve(result);
+            resolve(result[0]);
          }
       });
    });
