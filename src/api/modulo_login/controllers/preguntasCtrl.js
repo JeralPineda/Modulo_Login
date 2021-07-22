@@ -80,11 +80,11 @@ const preguntas = async (req, res) => {
 };
 
 const loginPreguntas = async (req, res) => {
-   const correo = req.body.correo;
+   const email = req.body.email;
 
    try {
       // Modelo de datos de usuario
-      const usuario = await getEmail(correo);
+      const usuario = await getEmail(email);
 
       // Verificar si el correo existe
       if (usuario === undefined) {

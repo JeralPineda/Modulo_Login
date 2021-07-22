@@ -31,7 +31,7 @@ router.get('/usuarios/:id', [validarJWT, esAdminRole, tieneRol(1, 3)], user);
 router.post('/preguntas', [check('respuesta1', 'La respuesta es obligatoria').not().isEmpty(), check('respuesta2', 'La respuesta es obligatoria').not().isEmpty(), validarCampos], preguntas);
 
 // Ruta para crear autenticacion si el usuario hace su primer login
-router.post('/preguntas_login', [check('correo', 'Debe ser un correo valido y es requerido').isEmail(), validarCampos], loginPreguntas);
+router.post('/preguntas_login', [check('email', 'Debe ser un correo valido y es requerido').isEmail(), validarCampos], loginPreguntas);
 
 // Ruta para traer las preguntas
 router.get('/preguntas', getAllPreguntas);
