@@ -2,8 +2,8 @@ const formulario = document.getElementById('formulario');
 const inputs = document.querySelectorAll('#formRespuestas input');
 
 const expresiones = {
-   respuesta: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{4,12}$/, // Letras, numeros,
-   respuesta2: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{4,12}$/,
+   respuesta: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{4,20}$/, // Letras, numeros,
+   respuesta2: /^[a-zA-ZÀ-ÿ0-9\_\-\s]{4,20}$/,
 };
 
 const campos = {
