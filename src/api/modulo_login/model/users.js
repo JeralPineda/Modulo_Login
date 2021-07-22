@@ -120,7 +120,7 @@ const getPreguntas = () => {
             reject(err);
             console.log(err);
          } else {
-            resolve(responses[0]);
+            resolve(responses);
          }
       });
    });
