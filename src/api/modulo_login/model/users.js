@@ -140,6 +140,34 @@ const getRespuestas = (id_usuario, id_preguntas) => {
    });
 };
 
+// Obtener la información de tbl_parametros para los intentos permitidos
+const getParametros = (id_usuario) => {
+   return new Promise((resolve, reject) => {
+      mysqlConnection.query('SELECT * FROM tbl_parametros WHERE id_usuario = ?', [id_usuario], (err, result) => {
+         if (err) {
+            reject(err);
+            console.log(err);
+         } else {
+            resolve(result[0]);
+         }
+      });
+   });
+};
+
+// actualizamos el estado del usuario cuando llego al limite de intentos
+const updateIndicador = (indicador, id) => {
+   return new Promise((resolve, reject) => {
+      mysqlConnection.query('UPDATE usuario SET indicador_usuario = ? WHERE usuario.id_usuario = ?', [indicador, id], (err, rows) => {
+         if (err) {
+            reject(err);
+            console.log(err);
+         } else {
+            resolve(rows[0]);
+         }
+      });
+   });
+};
+
 module.exports = {
    getEmail,
    getUsuario,
@@ -151,4 +179,6 @@ module.exports = {
    getRespuestas,
    tokenPreguntas,
    getPreguntas,
+   getParametros,
+   updateIndicador,
 };
