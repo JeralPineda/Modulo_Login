@@ -67,13 +67,17 @@ const login = async (req, res, next) => {
 
          //  Obtener los datos de la tabla parametros
          const parametros = await getParametros(usuario.id_usuario);
-         //  console.log(parametros);
 
          // Verificar la contraseña
          const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
          if (!validarPassword) {
             //  si la contraseña es incorrecta el contador incrementa
             contador++;
+
+            //  verificar que el usuario tenga los parámetros de intentos
+            if (!parametros) {
+               return res.status(400).json({ message: 'El usuario no cuenta con los parámetros de seguridad' });
+            }
 
             if (contador == parametros.valor) {
                const indicador = 'inactivo';
