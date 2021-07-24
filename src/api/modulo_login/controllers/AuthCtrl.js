@@ -1,10 +1,13 @@
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
-const { getEmail, postToken, getUsuario, postPassword, limpiarToken, getRespuestas } = require('../model/users');
+const { getEmail, postToken, getUsuario, postPassword, limpiarToken, getRespuestas, getParametros, updateIndicador } = require('../model/users');
 const { generarJWT, generarJwtPassword } = require('../helpers/generar-jwt');
 
 const transporter = require('../config/meiler');
+
+// contador para el limite de intentos permitidos
+let contador = 0;
 
 const login = async (req, res, next) => {
    const correo = req.body.correo;
@@ -59,12 +62,28 @@ const login = async (req, res, next) => {
          // Si el usuario esta activo
       } else {
          if (usuario.indicador_usuario !== 'activo') {
-            return res.status(400).json({ message: `El usuario con este email: ${correo} no existe!!` });
+            return res.status(400).json({ message: `El usuario no tiene acceso` });
          }
+
+         //  Obtener los datos de la tabla parametros
+         const parametros = await getParametros(usuario.id_usuario);
+         //  console.log(parametros);
 
          // Verificar la contraseña
          const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
          if (!validarPassword) {
+            //  si la contraseña es incorrecta el contador incrementa
+            contador++;
+
+            if (contador == parametros.valor) {
+               const indicador = 'inactivo';
+
+               // Cambiamos el estado del usuario a inactivo
+               await updateIndicador(indicador, usuario.id_usuario);
+
+               return res.status(400).json({ message: 'Bloqueado, excedió el limite de intentos permitidos, hablar con el administrador' });
+            }
+
             return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
          }
 
