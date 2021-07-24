@@ -31,7 +31,7 @@ const getUsuario = (id) => {
 // Editar usuario por id
 const putUsuario = (tokenPreguntas, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE  tbl_usuario SET token_respuestas = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [tokenPreguntas, fecha, id], (err, user) => {
+      mysqlConnection.query('UPDATE  tbl_usuario SET token_respuestas = ?, fecha_registro = ? WHERE id_usuario = ?', [tokenPreguntas, fecha, id], (err, user) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -45,7 +45,7 @@ const putUsuario = (tokenPreguntas, fecha, id) => {
 // Insertar token_password a usuarios por email
 const postToken = (token, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE tbl_usuario SET token_password = ? WHERE usuario.id_usuario = ?', [token, id], (err, row) => {
+      mysqlConnection.query('UPDATE tbl_usuario SET token_password = ? WHERE id_usuario = ?', [token, id], (err, row) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -59,7 +59,7 @@ const postToken = (token, id) => {
 // Cambiar contraseña y limpiar el campo del token
 const postPassword = (id, password) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE tbl_usuario SET password_usuario = ? WHERE usuario.id_usuario = ?', [id, password], (err, result) => {
+      mysqlConnection.query('UPDATE tbl_usuario SET password_usuario = ? WHERE id_usuario = ?', [id, password], (err, result) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -73,7 +73,7 @@ const postPassword = (id, password) => {
 // Limpiar el campo token_password después de cambiar la contraseña
 const limpiarToken = (id, token_password) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE tbl_usuario SET token_password = ? WHERE usuario.id_usuario = ?', [id, token_password], (err, rows) => {
+      mysqlConnection.query('UPDATE tbl_usuario SET token_password = ? WHERE id_usuario = ?', [id, token_password], (err, rows) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -101,7 +101,7 @@ const postRespuestas = (respuestas) => {
 // Limpiamos el token de las preguntas
 const tokenPreguntas = (token_respuestas, indicador, sesion, fecha, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE tbl_usuario SET token_respuestas = ?, indicador_usuario = ?, primera_sesion = ?, fecha_registro = ? WHERE usuario.id_usuario = ?', [token_respuestas, indicador, sesion, fecha, id], (err, rows) => {
+      mysqlConnection.query('UPDATE tbl_usuario SET token_respuestas = ?, indicador_usuario = ?, primera_sesion = ?, fecha_registro = ? WHERE id_usuario = ?', [token_respuestas, indicador, sesion, fecha, id], (err, rows) => {
          if (err) {
             reject(err);
             console.log(err);
@@ -157,7 +157,7 @@ const getParametros = (id_usuario) => {
 // actualizamos el estado del usuario cuando llego al limite de intentos
 const updateIndicador = (indicador, id) => {
    return new Promise((resolve, reject) => {
-      mysqlConnection.query('UPDATE tbl_usuario SET indicador_usuario = ? WHERE usuario.id_usuario = ?', [indicador, id], (err, rows) => {
+      mysqlConnection.query('UPDATE tbl_usuario SET indicador_usuario = ? WHERE id_usuario = ?', [indicador, id], (err, rows) => {
          if (err) {
             reject(err);
             console.log(err);
