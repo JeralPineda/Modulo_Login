@@ -71,9 +71,9 @@ body {
    }
 
    @media only screen and (max-width: 380px) {
-      .brand-text {
+      /* .brand-text {
          display: none;
-      }
+      } */
 
       .container {
          align-items: center;
