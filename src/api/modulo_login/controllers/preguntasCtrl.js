@@ -85,7 +85,7 @@ const preguntas = async (req, res) => {
       //   Actualizamos información del usuario
       await tokenPreguntas(tokenPregunta, indicador, sesion, fecha, uid);
 
-      res.status(201).json({ message: 'Preguntas guardadas exitosamente' });
+      res.status(201).json({ message: 'Preguntas y respuestas guardadas exitosamente' });
    } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Hable con el administrador' });
