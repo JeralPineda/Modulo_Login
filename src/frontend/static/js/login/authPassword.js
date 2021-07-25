@@ -59,7 +59,7 @@
             //   Si el usuario ingresa mal un campo
             Swal.fire({
                icon: 'error',
-               title: 'Debes completar los campos correctamente',
+               title: 'Las contraseñas no coinciden',
                showConfirmButton: false,
                timer: 1500,
             });
