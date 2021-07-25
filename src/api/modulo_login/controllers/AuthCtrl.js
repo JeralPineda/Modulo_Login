@@ -62,7 +62,7 @@ const login = async (req, res, next) => {
          // Si el usuario esta activo
       } else {
          if (usuario.indicador_usuario !== 'activo') {
-            return res.status(400).json({ message: `El usuario no tiene acceso` });
+            return res.status(400).json({ message: `Usuario bloqueado, no tiene acceso` });
          }
 
          //  Obtener los datos de la tabla parametros
