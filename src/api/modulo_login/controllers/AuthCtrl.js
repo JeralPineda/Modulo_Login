@@ -70,7 +70,8 @@ const login = async (req, res, next) => {
 
          // Verificar la contraseña
          const validarPassword = bcryptjs.compareSync(password, usuario.password_usuario);
-         if (!validarPassword) {
+
+         if (!validarPassword && usuario.id_rol_usuario !== 1) {
             //  si la contraseña es incorrecta el contador incrementa
             contador++;
 
@@ -88,6 +89,10 @@ const login = async (req, res, next) => {
                return res.status(400).json({ message: 'Bloqueado, excedió el limite de intentos permitidos, hablar con el administrador' });
             }
 
+            return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
+         }
+
+         if (!validarPassword && usuario.id_rol_usuario === 1) {
             return res.status(400).json({ message: 'El usuario o la contraseña son inválidos' });
          }
 
