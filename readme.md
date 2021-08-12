@@ -1,25 +1,27 @@
-# Sistema de Registro de Calificaciones v0.0.1 alpha
+# Modulo de seguridad para el registro de calificaciones (Modulo_login)
 
 Sistema desarrollado como proyecto para la clase de programación e implementación de sistemas
 
-### Índice
+**Fue desarrollada con:**
 
--  [Instalación y configuración base del sistema](https://github.com/soymizra/RegistroDeCalificaciones#instalar-y-ejecutar-el-proyecto)
--  Agregar endpoints al API (muy pronto)
--  Probar endpoints (muy pronto)
--  [Agregar pantallas a un módulo](https://github.com/soymizra/RegistroDeCalificaciones#agregar-pantallas-a-un-módulo)
+-  NodeJs
+-  Express
+-  HandlebarsJs
+-  JavaScript
+-  JsonWebToken
+-  MySQL
 
 #### Instalación y configuración base del sistema
 
 -  Clonar el repositorio con el siguiente comando:
    `git clone https://github.com/soymizra/RegistroDeCalificaciones.git`
 
--  Crear un archivo `.env` en la raiz del proyecto dentro de la carpeta RegistroDeCalificaciones. El contenido del archivo tendran las variables para configurar la conexion a mysql. Ejemplo del archivo:
+-  Crear un archivo `.env` en la raíz del proyecto dentro de la carpeta RegistroDeCalificaciones. El contenido del archivo tendrán las variables para configurar la conexión a mysql. Ejemplo del archivo:
    ```
    MYSQL_HOST=localhost
    MYSQL_USER=root
    MYSQL_PASSWORD=""
-   MYSQL_DATABASE=bibliovirtual
+   MYSQL_DATABASE=registro
    MYSQL_PORT=3306
    ```
 -  Crear una rama diferente de `main`, con el nombre del modulo que se va a desarrollar, con el comando de ejemplo: `git checkout -b modulo_registro_calificaciones`
@@ -30,3 +32,9 @@ Sistema desarrollado como proyecto para la clase de programación e implementaci
 -  Instalar las dependencias del proyecto, con el comando: `npm install `
 
 -  Ejecutar el proyecto con el comando: `npm run dev`
+
+[Demo del modulo](http://app-aaf167a3-51b2-4191-b15d-b4bbf85e5262.cleverapps.io/)
+
+![imagen1](./src/frontend/static/img/2.png)
+
+![imagen1](./src/frontend/static/img/1.png)
