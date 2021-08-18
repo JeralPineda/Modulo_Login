@@ -83,6 +83,9 @@ const login = async (req, res, next) => {
             if (contador == parametros.valor) {
                const indicador = 'inactivo';
 
+               //    reseteamos el contador
+               contador = 0;
+
                // Cambiamos el estado del usuario a inactivo
                await updateIndicador(indicador, usuario.id_usuario);
 
